@@ -17,6 +17,12 @@ class EvaluationError(Error):
         print("Error in Evaluating: ",expression)
         print(message)
 
+class BranchError(Error):
+
+    def __init__(self,expression,message):
+        print("Error in Branching Statement : ",expression)
+        print(message)
+
 
 # for testing purpose
 if __name__ == '__main__':

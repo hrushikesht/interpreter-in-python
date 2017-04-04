@@ -1,0 +1,8 @@
+a=3;
+b=3;
+
+if a<b then
+	k = a*b;
+else
+	k = a/b;
+fi
