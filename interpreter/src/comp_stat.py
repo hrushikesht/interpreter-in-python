@@ -83,19 +83,28 @@ class CompoundStatement(object):
             if len(self.text)>=index+5 and self.text[index+4]==';':
                 self.text = self.text[index+5:]
             else:
-                raise BranchError(self.text,"Semi colon missing after 'done'")
+                raise LoopError(self.text,"Semi colon missing after 'done'")
 
+    def parseComment(self):
+
+        end_pos = self.text.find("-->")
+
+        if end_pos==-1:
+            raise CommentError(self.text,"Unfinished Comment.")
+        else:
+            self.text = self.text[end_pos+3:]
 
 
     def parse(self):
 
         while(self.text!=""):
-
-            #parse if block
+            
             if self.text[0:2]=="if":
                 self.parseIf()
             elif self.text[0:5]=="while":
                 self.parseWhile()
+            elif self.text[0:4]=="<!--":
+                self.parseComment()
             else:
                 self.parseAssign()
 
