@@ -6,3 +6,5 @@ if a<b then
 else
 	k = a/b;
 fi;
+
+print("k = ",k);

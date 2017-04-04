@@ -12,7 +12,11 @@ class Parser():
     def parse(self):
 
         #strip away tabs, whitespaces and newline
-        self.text = re.sub('[\s]','',self.text)
+
+        parts = re.split(r"""("[^"]*"|'[^']*')""", text)
+        parts[::2] = map(lambda s: "".join(s.split()), parts[::2]) # outside quote
+
+        self.text = "".join(parts)
         self.text = self.text.rstrip()
         self.start = CompoundStatement(self.text)
         return self.start
@@ -43,11 +47,13 @@ if __name__ == '__main__':
     for filename in os.listdir(prog_dir):    
         curr_file = open(prog_dir+"/"+filename,'r')
         text = curr_file.read()
+
         P = Program(text)
         print("Parsing ",filename)
         P.parse()
         print("Executing ",filename)
         P.execute()
-        print("State for ",filename[:-4]," : ")
-        P.checkState()
         print("")
+        # print("State for ",filename[:-4]," : ")
+        # P.checkState()
+        # print("")

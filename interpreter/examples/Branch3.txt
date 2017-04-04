@@ -20,3 +20,5 @@ else
 	fi;
 fi;
 
+print("Minimum Value is ",ans);
+

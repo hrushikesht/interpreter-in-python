@@ -34,6 +34,12 @@ class CommentError(Error):
         print("Error in Comment Statement : ",expression)
         print(message)
 
+class PrintError(Error):
+
+    def __init__(self,expression,message):
+        print("Error in Print Statement: ",expression)
+        print(message)
+
 
 # for testing purpose
 if __name__ == '__main__':

@@ -4,6 +4,7 @@ from error import *
 import assign as ass
 import branch as br
 import loop
+import printer
 
 class CompoundStatement(object):
 
@@ -94,17 +95,37 @@ class CompoundStatement(object):
         else:
             self.text = self.text[end_pos+3:]
 
+    def parsePrint(self):
+
+        close_pos = self.text.find(')')
+
+        if close_pos==-1:
+            raise PrintError(self.text,"No Opening bracket at the end of statement.")
+        else:
+            try:
+                print_statement = printer.PrintStatement(self.text[6:close_pos])
+            except PrintError:
+                print("Error in parsing pring statement : ",self.text)
+
+            self.statements.append(print_statement)
+
+            if len(self.text)>=close_pos+2 and self.text[close_pos+1]==';':
+                self.text = self.text[close_pos+2:]
+            else:
+                raise PrintError(self.text,"Semi colon missing after 'done'")
+
 
     def parse(self):
 
         while(self.text!=""):
-            
             if self.text[0:2]=="if":
                 self.parseIf()
             elif self.text[0:5]=="while":
                 self.parseWhile()
             elif self.text[0:4]=="<!--":
                 self.parseComment()
+            elif self.text[0:5]=="print":
+                self.parsePrint()
             else:
                 self.parseAssign()
 

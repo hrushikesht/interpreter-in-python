@@ -6,3 +6,5 @@ while limit>1 do
 	fact = fact*limit;
 	limit = limit-1;
 done;
+
+print("Value of Factorial = ",fact);
