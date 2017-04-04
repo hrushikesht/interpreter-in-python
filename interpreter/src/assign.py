@@ -26,10 +26,12 @@ class AssignmentStatement(object):
             except AssignmentError:
                 print(self.statement)
         else:
+            print("hi")
             raise AssignmentError(self.statement,"Unknown Error")
 
     def eval(self,state):
         try:
-            state[self.lhs] =  self.rhs.eval(state)
+            y = self.rhs.eval(state)
+            state[self.lhs] =  y
         except EvaluationError:
             print(self.statement,"Unknown Error")

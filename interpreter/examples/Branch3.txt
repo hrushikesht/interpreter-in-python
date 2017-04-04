@@ -1,0 +1,20 @@
+
+
+x=1;
+y=2;
+z=3;
+
+if x<y then
+	if z<y then
+		ans = y;
+	else
+		ans = z;
+	fi;
+else
+	if z>x then
+		ans = z;
+	else
+		ans = x;
+	fi;
+fi;
+

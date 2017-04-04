@@ -1,4 +1,3 @@
-
 class Error(Exception):
     """"Base Class For Exeptions"""
     pass
@@ -21,6 +20,12 @@ class BranchError(Error):
 
     def __init__(self,expression,message):
         print("Error in Branching Statement : ",expression)
+        print(message)
+
+class LoopError(Error):
+
+    def __init__(self,expression,message):
+        print("Error in Loop Statement : ",expression)
         print(message)
 
 

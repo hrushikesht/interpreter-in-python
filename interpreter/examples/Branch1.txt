@@ -5,4 +5,4 @@ if a<b then
 	k = a*b;
 else
 	k = a/b;
-fi
+fi;

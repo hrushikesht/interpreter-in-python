@@ -1,0 +1,8 @@
+
+fact = 1;
+limit = 6;
+
+while limit>1 do
+	fact = fact*limit;
+	limit = limit-1;
+done;
