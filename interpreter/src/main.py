@@ -13,11 +13,13 @@ class Parser():
 
         #strip away tabs, whitespaces and newline
 
-        parts = re.split(r"""("[^"]*"|'[^']*')""", text)
+        ####Don't touch this
+        parts = re.split(r"""("[^"]*"|'[^']*')""", self.text)
         parts[::2] = map(lambda s: "".join(s.split()), parts[::2]) # outside quote
-
         self.text = "".join(parts)
         self.text = self.text.rstrip()
+        ###Don't touch this
+
         self.start = CompoundStatement(self.text)
         return self.start
 
@@ -51,7 +53,7 @@ if __name__ == '__main__':
         P = Program(text)
         print("Parsing ",filename)
         P.parse()
-        print("Executing ",filename)
+        print("Output for ",filename," : ")
         P.execute()
         print("")
         # print("State for ",filename[:-4]," : ")

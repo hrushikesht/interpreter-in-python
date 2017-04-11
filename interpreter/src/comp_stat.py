@@ -112,7 +112,7 @@ class CompoundStatement(object):
             if len(self.text)>=close_pos+2 and self.text[close_pos+1]==';':
                 self.text = self.text[close_pos+2:]
             else:
-                raise PrintError(self.text,"Semi colon missing after 'done'")
+                raise PrintError(self.text,"Semi colon missing after the end of the statement")
 
 
     def parse(self):
