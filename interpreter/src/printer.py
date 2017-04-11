@@ -1,3 +1,4 @@
+from keywords import *
 import re
 from error import *
 from expression import *

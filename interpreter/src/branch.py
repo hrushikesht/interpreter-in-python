@@ -1,6 +1,7 @@
 from error import *
 from expression import *
 from condition import *
+from keywords import *
 import comp_stat as cs
 
 
@@ -16,7 +17,7 @@ class BranchStatement(object):
 
     def parse(self):
 
-        then_index = self.statement.find("then")
+        then_index = self.statement.find(THEN)
 
         if then_index==-1:
             raise BranchError(self.statement,"'then' statement not found.")
@@ -29,12 +30,12 @@ class BranchStatement(object):
                 else_pos=None
 
                 for i in range(2,len(self.statement)-4):
-                    if self.statement[i:i+2]=="if":
+                    if self.statement[i:i+2]==IF:
                         if_count+=1
-                    elif self.statement[i:i+2]=="fi":
+                    elif self.statement[i:i+2]==FI:
                         fi_count+=1
 
-                    if self.statement[i:i+4]=="else" and if_count==fi_count:
+                    if self.statement[i:i+4]==ELSE and if_count==fi_count:
                         else_pos = i
                         break
                 
@@ -44,7 +45,7 @@ class BranchStatement(object):
                 else:
                     self.then = cs.CompoundStatement(self.statement[then_index+4:-2])
             except BranchError:
-                print(self.statement,"Unknown Erorr")
+                print(self.statement,"Unknown Error")
 
     def eval(self,state):
         try:

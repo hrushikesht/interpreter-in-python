@@ -1,3 +1,4 @@
+from keywords import *
 from error import *
 from expression import *
 
@@ -32,6 +33,11 @@ class LTCondition(GenericCondition):
     def eval(self,state):
         return self.left.eval(state)<self.right.eval(state)
 
+class NECondition(GenericCondition):
+
+    def eval(self,state):
+        return self.left.eval(state)!=self.right.eval(state)
+
 class ConditionalStatement(object):
 
     def __init__(self,expression):
@@ -43,11 +49,15 @@ class ConditionalStatement(object):
     def parse(self):
 
         try:
+            #Done for ease in implementation
+            #Can be optimized for better performance
+            #By checking and finding sequentially.
             pos1 = self.expression.find(">=")
             pos2 = self.expression.find("<=")
             pos3 = self.expression.find("==")
             pos4 = self.expression.find(">")
             pos5 = self.expression.find("<")
+            pos6 = self.expression.find("!=")
 
             if pos1!=-1:
                 self.expr_type = GTETCondition(self.expression[:pos1],self.expression[pos1+2:])
@@ -59,6 +69,8 @@ class ConditionalStatement(object):
                 self.expr_type = GTCondition(self.expression[:pos4],self.expression[pos4+1:])
             elif pos5!=-1:
                 self.expr_type = LTCondition(self.expression[:pos5],self.expression[pos5+1:])
+            elif pos6!=-1:
+                self.expr_type = NECondition(self.expression[:pos6],self.expression[pos6+2:])
             else:
                 raise BranchError(self.expression,"Invalid Syntax in Conditional Statement")
         except BranchError:

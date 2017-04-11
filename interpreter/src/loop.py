@@ -1,3 +1,4 @@
+from keywords import *
 from error import *
 from expression import *
 from condition import *
@@ -15,7 +16,7 @@ class WhileStatement(object):
 
 	def parse(self):
 
-		do_pos = self.block.find("do")
+		do_pos = self.block.find(DO)
 
 		if do_pos==-1:
 			raise LoopError(self.block,"Missing 'do' in 'while' block")

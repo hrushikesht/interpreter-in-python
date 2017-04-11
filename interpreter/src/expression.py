@@ -1,3 +1,4 @@
+from keywords import *
 from error import *
 
 infi = 999999999
@@ -11,7 +12,7 @@ class Var(object):
         try:
             return state[self.variable]
         except NameError:
-            print("Unknown Error")
+            print("Variable \'",self.variable,"\' not found")
 
 class Constant(object):
 
@@ -19,10 +20,7 @@ class Constant(object):
         self.data = int(data)
 
     def eval(self,state):
-        try:
-            return self.data
-        except EvaluationError:
-            print(self.data,"Unknown Error")
+        return self.data
 
 class Factor(object):
 
@@ -62,7 +60,7 @@ class GenericExpression(object):
 class PlusExpression(GenericExpression):
 
     def parse(self):
-        idx = self.expression.find("+")
+        idx = self.expression.find(PLUS)
 
         self.right = Expression(self.expression[0:idx])
         self.left = Expression(self.expression[idx+1:])
@@ -76,7 +74,7 @@ class PlusExpression(GenericExpression):
 class MinusExpression(GenericExpression):
 
     def parse(self):
-        idx = self.expression.find("-")
+        idx = self.expression.find(MINUS)
 
         self.left = Expression(self.expression[0:idx])
         self.right = Expression(self.expression[idx+1:])
@@ -90,7 +88,7 @@ class MinusExpression(GenericExpression):
 class MulExpression(GenericExpression):
 
     def parse(self):
-        idx = self.expression.find("*")
+        idx = self.expression.find(MUL)
 
         self.left = Expression(self.expression[0:idx])
         self.right = Expression(self.expression[idx+1:])
@@ -104,7 +102,7 @@ class MulExpression(GenericExpression):
 class DivExpression(GenericExpression):
 
     def parse(self):
-        idx = self.expression.find("/")
+        idx = self.expression.find(DIV)
 
         self.left = Expression(self.expression[0:idx])
         self.right = Expression(self.expression[idx+1:])
@@ -125,8 +123,8 @@ class Expression(object):
     
     def parse(self):
 
-        add_index = self.expression.find("+")
-        sub_index = self.expression.find("-")
+        add_index = self.expression.find(PLUS)
+        sub_index = self.expression.find(MINUS)
 
         if(add_index==-1): add_index=infi
         if(sub_index==-1): sub_index=infi
@@ -136,8 +134,8 @@ class Expression(object):
         elif sub_index<add_index:
             self.expr_type = MinusExpression(self.expression)
         else:
-            div_index = self.expression.find("/")
-            mul_index = self.expression.find("*")
+            div_index = self.expression.find(DIV)
+            mul_index = self.expression.find(MUL)
 
             if(mul_index==-1): mul_index=infi
             if(div_index==-1): div_index=infi

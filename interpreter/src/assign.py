@@ -1,5 +1,7 @@
 from error import *
 from expression import *
+from keywords import *
+
 
 class AssignmentStatement(object):
 
@@ -11,23 +13,25 @@ class AssignmentStatement(object):
         self.parse()
 
     def parse(self):
-        if(self.statement.count('=')==1):
-            try:
-                idx = self.statement.index('=')
-                self.lhs = self.statement[0:idx]
-                self.rhs = self.statement[idx+1:]
+        cnt = self.statement.count('=')
+        if(cnt==1):
+            idx = self.statement.index('=')
+            self.lhs = self.statement[0:idx]
+            self.rhs = self.statement[idx+1:]
 
-                #check if lhs contains a variable or not
-                if(self.lhs[0].isdigit()):
-                    raise AssignmentError(self.statement)
+            if self.lhs=="":
+                raise AssignmentError(self.statement,"LHS of Assignment Statement Absent")
 
-                self.rhs = Expression(self.rhs)
-                return True
-            except AssignmentError:
-                print(self.statement)
+            #check if lhs contains a variable or not
+            if self.lhs[0].isdigit():
+                raise AssignmentError(self.statement,"Variable must start with a alphabetic character")
+
+            self.rhs = Expression(self.rhs)
+            return True
+        elif cnt==0:
+            raise AssignmentError(self.statement,"'=' sign not found in Assignment Statement")
         else:
-            print("hi")
-            raise AssignmentError(self.statement,"Unknown Error")
+            raise AssignmentError(self.statement,"More than one '=' sign found in Assignment Statement")
 
     def eval(self,state):
         try:
