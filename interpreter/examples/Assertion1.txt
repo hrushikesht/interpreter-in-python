@@ -1,4 +1,4 @@
-a = 2;
-b = 4;
-c = 5;
-b = 2;
+d = -5;
+d = d + 3
+
+print("Vale if d  ",d);

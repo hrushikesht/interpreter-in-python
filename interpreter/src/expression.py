@@ -17,7 +17,15 @@ class Var(object):
 class Constant(object):
 
     def __init__(self,data):
-        self.data = int(data)
+        try:
+            if data[0]==MINUS:
+                self.data = -int(data[1:])
+            elif data[0]==PLUS:
+                self.data = int(data[1:])
+            else:
+                self.data=int(data)
+        except ValueError:
+            print("Error in evaluation of : ",data)
 
     def eval(self,state):
         return self.data
@@ -33,7 +41,7 @@ class Factor(object):
     def parse(self):
 
         try:
-            if(self.expression[0].isdigit()):
+            if self.expression[0]==MINUS or self.expression[0]==PLUS or self.expression[0].isdigit():
                 self.data_type = Constant(self.expression)
             else:
                 self.data_type = Var(self.expression)
@@ -129,7 +137,9 @@ class Expression(object):
         if(add_index==-1): add_index=infi
         if(sub_index==-1): sub_index=infi
 
-        if(add_index<sub_index):
+        if add_index==0 or sub_index==0:
+            self.expr_type = Factor(self.expression)
+        elif(add_index<sub_index):
             self.expr_type = PlusExpression(self.expression)
         elif sub_index<add_index:
             self.expr_type = MinusExpression(self.expression)
