@@ -1,5 +1,0 @@
-x= 1;
-y = 2;
-ifbakchodithen
-x = x+2;
-fi;
